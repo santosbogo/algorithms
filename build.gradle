@@ -1,0 +1,37 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+idea {
+    project {
+        //Set specific jdk and language level
+        jdkName = '1.8'
+        languageLevel = '1.8'
+    }
+    module {
+        downloadSources = true
+    }
+}
+
+repositories {
+    // Central Repository
+    mavenCentral()
+
+    // GitHub Packages
+    maven {
+        url = uri("https://maven.pkg.github.com/FacultadDeIngenieria/*")
+        credentials {
+            username = "public"
+            password = "***REMOVED***"
+        }
+    }
+}
+
+dependencies {
+    /* Compile scope */
+    implementation 'ar.edu.austral.fi.algorithms:algorithms-base:1.0.0'
+    implementation 'org.jetbrains:annotations:22.0.0'
+
+    /* Test scope */
+    testImplementation 'org.assertj:assertj-core:3.20.2'
+    testImplementation 'junit:junit:4.13'
+}
