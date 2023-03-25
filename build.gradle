@@ -12,12 +12,6 @@ idea {
     }
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
-    }
-}
-
 repositories {
     // Central Repository
     mavenCentral()
