@@ -3,23 +3,43 @@ package algorithms.stack;
 import org.jetbrains.annotations.NotNull;
 
 public class ArrayStack<E> implements Stack<E>{
+
+    private E[] stack = (E[]) new Object[10];
+    private int point;
+
+    private void resize(int size){
+        E[] newstack = (E[]) new Object[size];
+        for (int i = 0; i < size(); i++)
+            newstack[i] = stack[i];
+        stack = newstack;
+    }
+
     @Override
     public void push(@NotNull E item) {
-        throw new RuntimeException("Not implemented");
+        if (size() == point){
+            resize(size()*2);
+        }
+        stack[point] = item;
+        point++;
     }
 
     @Override
     public E pop() {
-        throw new RuntimeException("Not implemented");
+        if (point == size()/4){
+            resize(size()/2);
+        }
+        E old = stack[--point];
+        stack[point] = null;
+        return old;
     }
 
     @Override
     public boolean isEmpty() {
-        throw new RuntimeException("Not implemented");
+        return point == 0;
     }
 
     @Override
     public int size() {
-        throw new RuntimeException("Not implemented");
+        return stack.length;
     }
 }
