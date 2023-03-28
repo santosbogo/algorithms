@@ -4,8 +4,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class ArrayStack<E> implements Stack<E>{
 
-    private E[] stack = (E[]) new Object[10];
+    private E[] stack;
     private int point;
+
+    public ArrayStack(){
+        stack = (E[]) new Object[10];
+    }
+    public ArrayStack(int size){
+        stack = (E[]) new Object[size];
+    }
 
     private void resize(int size){
         E[] newstack = (E[]) new Object[size];
