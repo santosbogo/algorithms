@@ -1,7 +1,5 @@
 package algorithms.stack;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Iterator;
 
 public class ArrayStack<E> implements Stack<E>, Iterable<E> {
@@ -74,7 +72,7 @@ public class ArrayStack<E> implements Stack<E>, Iterable<E> {
 
         @Override
         public E next() {
-            return stack[pointer];
+            return stack[--pointer];
         }
     }
 }

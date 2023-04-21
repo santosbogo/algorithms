@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
     /* Compile scope */
-    implementation 'ar.edu.austral.fi.algorithms:algorithms-base:1.0.0'
+    implementation 'ar.edu.austral.fi.algorithms:algorithms-base:1.0.2'
     implementation 'org.jetbrains:annotations:22.0.0'
 
     /* Test scope */
