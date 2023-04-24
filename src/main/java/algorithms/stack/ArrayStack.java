@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class ArrayStack<E> implements Stack<E>, Iterable<E> {
     private E[] stack;
-    private int n;
+    private int n = 0;
 
     public ArrayStack(){
         stack = (E[]) new Object[10];
