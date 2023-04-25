@@ -16,13 +16,14 @@ public class ArrayQueue<E> implements Queue<E> {
 
     private void resize(int size){
         E[] queue1 = (E[]) new Object[size];
-        for (int i = last, j = 0; i < size(); i++, j++)
+        for (int i = first, j = 0; i < last; i++, j++)
             queue1[j] = queue[i];
         queue = queue1;
     }
+
     @Override
     public void enqueue(@NotNull E item) {
-        if(queue.length == first){
+        if(queue.length == last){
             resize(queue.length * 2);
         }
         queue[last] = item;
@@ -35,16 +36,17 @@ public class ArrayQueue<E> implements Queue<E> {
         if(isEmpty()){
             throw new NoSuchElementException();
         }
-        E stat = queue[++first];
+        E stat = queue[first];
         queue[first] = null;
+        first++;
         return stat;
     }
 
     @Override
-    public boolean isEmpty() { return first == last; }
+    public boolean isEmpty() { return last == first; } // Por que es public???
 
     @Override
-    public int size() { return first - last; }
+    public int size() { return last - first; } // Por que es public???
 
     @NotNull
     @Override
@@ -52,7 +54,7 @@ public class ArrayQueue<E> implements Queue<E> {
 
     private class IterableArrayQueue implements Iterator<E>{
         private final int lastposition = last;
-        private final int firstposition = first;
+        private int firstposition = first;
         @Override
         public boolean hasNext() {
             return lastposition != firstposition;
@@ -60,7 +62,7 @@ public class ArrayQueue<E> implements Queue<E> {
 
         @Override
         public E next() {
-            return queue[lastposition-firstposition-1];
+            return queue[firstposition++];
         }
     }
 }
