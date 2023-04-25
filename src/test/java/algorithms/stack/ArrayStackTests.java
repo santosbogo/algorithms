@@ -52,14 +52,29 @@ public class ArrayStackTests {
     }
 
     @Test
-    public void constructorsTest(){
+    public void constructorTest(){
         ArrayStack<Integer> stack1 = new ArrayStack<>();
-        ArrayStack<Integer> stack2 = new ArrayStack<>(3);
+    }
 
+    @Test
+    public void iteratorTest(){
+        assertThat(testStack.iterator().hasNext()).isFalse();
+        testStack.push(4);
+        testStack.push(6);
+        assertThat(testStack.iterator().hasNext()).isTrue();
+        assertThat(testStack.iterator().next()).isEqualTo(testStack.pop());
+    }
+
+    @Test
+    public void sizeTest(){
+        testStack.push(4); testStack.push(5);
+        testStack.pop(); testStack.push(6);
+        assertThat(testStack.size()).isEqualTo(2);
+    }
+
+    @Test
+    public void emptyTest (){
+        testStack.push(4); testStack.pop();
+        assertThat(testStack.isEmpty()).isTrue();
     }
 }
-//ArrayStack<Integer> stack = new ArrayStack<>();
-//        stack.push(4);
-//        Iterator<Integer> i = stack.iterator();
-//        i.hasNext();
-//        i.next();

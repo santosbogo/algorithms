@@ -23,7 +23,7 @@ public class ArrayStack<E> implements Stack<E>, Iterable<E> {
 
     @Override
     public void push(@NotNull E item) {
-        if (totalspace() == n){
+        if (stack.length == n){
             resize(size()*2);
         }
         stack[n] = item;
@@ -46,16 +46,12 @@ public class ArrayStack<E> implements Stack<E>, Iterable<E> {
     @Override
     public boolean isEmpty() {
         return n == 0;
-    }
+    } // Por que es public???
 
     @Override
     public int size() {
         return n;
-    }
-
-    public int totalspace(){
-        return stack.length;
-    }
+    } // Por que es public???
 
     @NotNull
     @Override
