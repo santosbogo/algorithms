@@ -52,11 +52,6 @@ public class LinkedListStackTests {
     }
 
     @Test
-    public void constructorTest(){
-        ArrayStack<Integer> stack1 = new ArrayStack<>();
-    }
-
-    @Test
     public void iteratorTest(){
         assertThat(testStack.iterator().hasNext()).isFalse();
         testStack.push(4);
