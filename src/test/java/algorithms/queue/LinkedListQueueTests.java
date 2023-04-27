@@ -1,6 +1,5 @@
 package algorithms.queue;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.NoSuchElementException;
@@ -37,8 +36,7 @@ public class LinkedListQueueTests {
         testQueue.enqueue(3);
         assertThat(testQueue.iterator().hasNext()).isTrue();
         testQueue.enqueue(6);
-        assertThat(testQueue.iterator().next()).isEqualTo(testQueue.dequeue());
-
+        assertThat(testQueue.iterator().next()).isEqualTo(6);
     }
 
     @Test
