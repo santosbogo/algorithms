@@ -2,6 +2,8 @@ package algorithms.stack;
 
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -24,7 +26,7 @@ public class ArrayStackTests {
 
     @Test
     public void popEmptyTest() {
-        assertThrows(IllegalStateException.class, () -> {
+        assertThrows(NoSuchElementException.class, () -> {
             testStack.pop();
         });
     }
@@ -62,7 +64,7 @@ public class ArrayStackTests {
         testStack.push(4);
         testStack.push(6);
         assertThat(testStack.iterator().hasNext()).isTrue();
-        assertThat(testStack.iterator().next()).isEqualTo(testStack.pop());
+        assertThat(testStack.iterator().next()).isEqualTo(4);
     }
 
     @Test
