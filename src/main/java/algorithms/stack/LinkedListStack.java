@@ -3,8 +3,9 @@ package algorithms.stack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class LinkedListStack<E> implements Stack<E> {
+public class LinkedListStack<E> implements Stack<E>{
     private Node first;
     private int n = 0;
 
@@ -13,8 +14,7 @@ public class LinkedListStack<E> implements Stack<E> {
         Node next;
     }
 
-    @Override
-    public void push(@NotNull E item) {
+    public void push(@NotNull E item){
         Node oldfirst = first;
         first = new Node();
         first.item = item;
@@ -22,10 +22,9 @@ public class LinkedListStack<E> implements Stack<E> {
         n++;
     }
 
-    @Override
-    public E pop() {
-        if(n == 0){
-            throw new IllegalStateException();
+    public E pop(){
+        if(size() == 0){
+            throw new NoSuchElementException();
         }
         E stat = first.item;
         first = first.next;
@@ -33,28 +32,29 @@ public class LinkedListStack<E> implements Stack<E> {
         return stat;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return (first == null);
+    public boolean isEmpty(){
+        return n == 0;
     }
 
-    @Override
-    public int size() {
+    public int size(){
         return n;
     }
+
     public Iterator<E> iterator(){
-        return new ItterableLinkedStack();
+        return new ItterableLinkedList();
     }
-    private class ItterableLinkedStack implements Iterator<E>{
-        private final Node pointer = first;
-        @Override
+
+    private class ItterableLinkedList implements Iterator<E>{
+        private Node pointer = first;
+
         public boolean hasNext() {
-            return (pointer != null);
+            return pointer != null;
         }
 
-        @Override
-        public E next() {
-            return pointer.next.item;
+        public E next(){
+            E stat = pointer.next.item;
+            pointer = pointer.next;
+            return stat;
         }
     }
 }
