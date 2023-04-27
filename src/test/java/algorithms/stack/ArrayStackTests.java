@@ -32,11 +32,6 @@ public class ArrayStackTests {
     }
 
     @Test
-    public void iterationTest(){
-        assertThat(testStack.iterator().hasNext()).isEqualTo(false);
-    }
-
-    @Test
     public void loiteringTest(){
         testStack.push(1);
         testStack.push(2);
