@@ -33,43 +33,40 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
 
     @Override
     public boolean contains(@NotNull Key key) {
-        return find(root, key) != null;
+        return get(key) != null;
     }
 
     private Node<Key, Value> find (Node<Key, Value> node, Key key){
         if (node == null) return null;
         int comp = comparator.compare(key, node.key);   // 0 if key == node.key, + if key < node.key, - if key > node.key
         if (comp == 0) return node;
-        if (comp > 0) find(node.right, key);
-        if (comp < 0) find(node.left, key);
+        if (comp > 0) return find(node.right, key);
+        if (comp < 0) return find(node.left, key);
         return node;
     }
 
     @Override
     public Value get(@NotNull Key key) {
-        return find(root, key).value;
+        if (find(root, key) == null) return null;
+        return (find(root, key).value);
     }
 
     @Override
     public void put(@NotNull Key key, Value value) {
-        Node <Key, Value> node = new Node<>(key, value);
-        if (root == null) root = node;
-        else if (find(root, key) != null) find(root, key).value = value;
-        else root = put(root, node);
+        root = put(root, key, value);
     }
-    private Node<Key, Value> put (Node<Key, Value> head, Node<Key, Value> node){
-        if (head == null) {
-            head = node;
-            size ++;
-            return head;
+    private Node<Key, Value> put (Node<Key, Value> node, Key key, Value value){
+        if (node == null){
+            size++;
+            return new Node<>(key, value);
         }
 
-        int comp = comparator.compare(node.key, head.key);
+        int comp = comparator.compare(key, node.key);
+        if (comp == 0) node.value = value;
+        else if (comp > 0) node.right = put(node.right, key, value);
+        else if(comp < 0) node.left = put(node.left, key, value);
 
-        if (comp > 0) head.left = put(head.right, node);
-        if (comp < 0) head.left = put(head.left, node);
-
-        return head;
+        return node;
     }
 
     @Override
@@ -86,12 +83,12 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         int comp = comparator.compare(key, node.key);
 
         if (comp > 0){
-            node.right = remove(node.right, key);
+            node.right = remove(node.right, key);//1
         }
         else if (comp < 0) {
-            node.left = remove(node.left, key);
+            node.left = remove(node.left, key);//2
         }
-        else {
+        else{
             if (node.left == null && node.right == null) return null; //Leaf node
             if (node.left == null) return node.right; //Node just have right child
             if (node.right == null) return node.left; //Node just have left child
@@ -100,15 +97,16 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
                 bigger.right = node.right; //Now put the bigger in the position of the deleted
                 bigger.left = node.left;
                 remove(bigger.left, max(node.left)); // if we dont do this we have 2 nodes with same key
-                return bigger;
+                return bigger;//2
             }
         }
-        return node;
+        return node; //1
     }
 
     @Override
     public void clear() {
-
+        root = null;
+        size = 0;
     }
 
     //1: Process left
@@ -116,11 +114,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
     //3: Process right
     @Override
     public Iterator<Key> inOrder() {
-        final LinkedListQueue<Key> keys = new LinkedListQueue<>();
+        final ArrayQueue<Key> keys = new ArrayQueue<>();
         inOrder(root, keys);
         return keys.iterator();
     }
-    private void inOrder(Node<Key, Value> node, LinkedListQueue<Key> keys){
+    private void inOrder(Node<Key, Value> node, ArrayQueue<Key> keys){
         if (node == null) return;
         inOrder(node.left, keys);
         keys.enqueue(node.key);
@@ -132,11 +130,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
     //3: Process root
     @Override
     public Iterator<Key> postOrder() {
-        final LinkedListQueue<Key> keys = new LinkedListQueue<>();
+        final ArrayQueue<Key> keys = new ArrayQueue<>();
         postOrder(root, keys);
         return keys.iterator();
     }
-    private void postOrder(Node<Key, Value> node, LinkedListQueue<Key> keys){
+    private void postOrder(Node<Key, Value> node, ArrayQueue<Key> keys){
         if (node == null) return;
         postOrder(node.left, keys);
         postOrder(node.right, keys);
@@ -148,11 +146,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
     //3: Process right
     @Override
     public Iterator<Key> preOrder() {
-        LinkedListQueue<Key> keys = new LinkedListQueue<>();
+        ArrayQueue<Key> keys = new ArrayQueue<>();
         preOrder(root, keys);
         return keys.iterator();
     }
-    private void preOrder(Node<Key,Value> node, LinkedListQueue<Key> keys){
+    private void preOrder(Node<Key,Value> node, ArrayQueue<Key> keys){
         if (node == null) return;
         keys.enqueue(node.key);
         preOrder(node.left, keys);
@@ -170,11 +168,12 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         Node<Key, Value> node = root;
 
         levelOrderIterator(){
-            nodes.enqueue(node);
+            //nodes.enqueue(node);
         }
 
         @Override
         public boolean hasNext() {
+            //nodes.dequeue();
             return !nodes.isEmpty();
         }
 
