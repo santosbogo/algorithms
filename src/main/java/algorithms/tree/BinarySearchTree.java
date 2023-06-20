@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
 
-    private final Comparator<Key> comparator;
+    final Comparator<Key> comparator;
     Node<Key, Value> root;
     private int size;
 
@@ -38,11 +38,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
 
     private Node<Key, Value> find (Node<Key, Value> node, Key key){
         if (node == null) return null;
+
         int comp = comparator.compare(key, node.key);   // 0 if key == node.key, + if key < node.key, - if key > node.key
-        if (comp == 0) return node;
         if (comp > 0) return find(node.right, key);
         if (comp < 0) return find(node.left, key);
-        return node;
+        else return node;
     }
 
     @Override
