@@ -12,7 +12,7 @@ import java.util.Random;
 public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
 
 
-    private Node<Key, Value> root;
+    Node<Key, Value> root;
     private int size;
     private final Comparator<Key> comparator;
     private final Random random = new Random();
