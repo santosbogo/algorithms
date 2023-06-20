@@ -55,14 +55,15 @@ public class ArrayQueue<E> implements Queue<E> {
     private class IterableArrayQueue implements Iterator<E>{
         private final int lastposition = last;
         private int firstposition = first;
+        E[] iterqueue = queue;
         @Override
         public boolean hasNext() {
-            return lastposition != firstposition;
+            return firstposition != lastposition;
         }
 
         @Override
         public E next() {
-            return queue[firstposition++];
+            return iterqueue[firstposition++];
         }
     }
 }
