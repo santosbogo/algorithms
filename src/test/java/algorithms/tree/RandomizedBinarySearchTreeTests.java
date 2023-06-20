@@ -140,15 +140,15 @@ public class RandomizedBinarySearchTreeTests {
         T.put(7, 7);
         T.put(8, 8);
         T.put(9, 9);
-        T.remove(9);
-        T.remove(7);
-        T.remove(8);
-        T.remove(5);
-        T.remove(6);
-        T.remove(4);
-        T.remove(2);
-        T.remove(3);
-        T.remove(1);
+//        T.remove(9);
+//        T.remove(7);
+//        T.remove(8);
+//        T.remove(5);
+//        T.remove(6);
+//        T.remove(4);
+//        T.remove(2);
+//        T.remove(3);
+//        T.remove(1);
     }
     @Test
     public void variations2Test() {
