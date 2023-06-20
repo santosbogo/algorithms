@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 
 public class RandomizedBinarySearchTreeTests {
     Comparator<Integer> comparator = Comparator.naturalOrder();
@@ -66,7 +67,7 @@ public class RandomizedBinarySearchTreeTests {
         T.put(1, 1);
         T.put(2, 2);
         T.clear();
-        assertThat(T.root).isEqualTo(null);
+        assertThat(T.levelOrder().hasNext()).isFalse();
         assertThat(T.size()).isEqualTo(0);
     }
 
@@ -103,14 +104,21 @@ public class RandomizedBinarySearchTreeTests {
         assertThat(T.min()).isEqualTo(2);
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test
     public void removeMaxEmptyTest() {
-        T.removeMax();
+        assertThrows(NoSuchElementException.class, () ->{
+            T.removeMax();
+        });
+
     }
 
-    @Test (expected = NoSuchElementException.class)
+    @Test
     public void removeMinEmptyTest() {
-        T.removeMin();
+        assertThrows(NoSuchElementException.class, () ->{
+            T.removeMin();
+        });
+
+
     }
 
     @Test
@@ -159,8 +167,9 @@ public class RandomizedBinarySearchTreeTests {
     public void removeEmptyTest() {
         T.put(1, 1);
         T.remove(1);
-        T.remove(1);
-        assertThat(T.size()).isEqualTo(0);
+        assertThrows(NoSuchElementException.class, () ->{
+            T.remove(1);
+        });
     }
 
 }
