@@ -35,8 +35,7 @@ public class ArrayStack<E> implements Stack<E>{
 
     public E pop(){
         if (isEmpty()){
-            //throw new NoSuchElementException();
-            return null;
+            throw new NoSuchElementException();
         }
         if ((stack.length/4) == size()){
             resize(stack.length/2);
