@@ -48,7 +48,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     @Override
     public Value get(@NotNull Key key) {
         Node<Key, Value> node = find(root, key);
-        if (node == null) throw new NoSuchElementException();
+        if (node == null) return null;
         return node.value;
     }
 
