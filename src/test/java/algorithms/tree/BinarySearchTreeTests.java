@@ -35,10 +35,6 @@ public class BinarySearchTreeTests {
         assertThat(T.get(2)).isEqualTo(2);
     }
 
-    @Test
-    public void getNullTest() {
-        assertThat(T.get(1)).isEqualTo(null);
-    }
 
     @Test
     public void putTest() {

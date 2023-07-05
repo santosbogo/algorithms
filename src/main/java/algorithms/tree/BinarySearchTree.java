@@ -74,9 +74,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     @Override
     public void remove(@NotNull Key key) {
         root = remove(root, key);
+        size --;
     }
     private Node<Key, Value> remove(Node<Key, Value> node, Key key){
         if (node == null){
+            size++;
             throw new NoSuchElementException();
         }
 
@@ -85,7 +87,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
         if (comp > 0) node.right = remove(node.right, key);
         if (comp < 0) node.left = remove(node.left, key);
         if (comp == 0) {
-            size--;
             if (node.right == null) return node.left;
             if (node.left == null) return node.right;
             else {
@@ -185,7 +186,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
         return min(root).key;
     }
     private Node<Key,Value> min(Node<Key, Value> node){
-        if (node.left != null) min(node.left);
+        if (node.left != null) return min(node.left);
         return node;
     }
 
@@ -194,7 +195,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
         return max(root).key;
     }
     private Node<Key, Value> max(Node<Key, Value> node){
-        if (node.right != null) max(node.right);
+        if (node.right != null) return max(node.right);
         return node;
     }
 }
