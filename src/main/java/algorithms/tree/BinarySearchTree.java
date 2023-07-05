@@ -2,23 +2,21 @@ package algorithms.tree;
 
 
 import algorithms.queue.ArrayQueue;
-import algorithms.queue.LinkedListQueue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
+public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
-    final Comparator<Key> comparator;
-    Node<Key, Value> root;
+    private Node<Key, Value> root = null;
+    private Comparator<Key> comparator;
     private int size;
 
-    public BinarySearchTree(Comparator<Key> comparator) {
+    public BinarySearchTree(Comparator <Key> comparator){
         this.comparator = comparator;
-        root = null;
-        size = 0;
+        this.size = 0;
     }
 
     @Override
@@ -31,76 +29,73 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         return size == 0;
     }
 
-    @Override
-    public boolean contains(@NotNull Key key) {
-        return get(key) != null;
+    private Node<Key, Value> find(Node<Key, Value> node, Key key){
+        if (node == null)
+            return null;
+
+        int comp = comparator.compare(key, node.key);
+
+        if (comp > 0) return find(node.right, key);
+        else if (comp < 0) return find(node.left, key);
+        return node; //found the node
     }
 
-    private Node<Key, Value> find (Node<Key, Value> node, Key key){
-        if (node == null) return null;
-
-        int comp = comparator.compare(key, node.key);   // 0 if key == node.key, + if key < node.key, - if key > node.key
-        if (comp > 0) return find(node.right, key);
-        if (comp < 0) return find(node.left, key);
-        else return node;
+    @Override
+    public boolean contains(@NotNull Key key) {
+        return find(root, key) != null;
     }
 
     @Override
     public Value get(@NotNull Key key) {
-        if (find(root, key) == null) return null;
-        return (find(root, key).value);
+        Node<Key, Value> node = find(root, key);
+        if (node == null) throw new NoSuchElementException();
+        return node.value;
     }
 
     @Override
     public void put(@NotNull Key key, Value value) {
-        root = put(root, key, value);
+        root = put (root, key, value);
     }
-    private Node<Key, Value> put (Node<Key, Value> node, Key key, Value value){
+    private Node<Key, Value> put(Node<Key, Value> node, Key key, Value value){
         if (node == null){
-            size++;
-            return new Node<>(key, value);
+            size ++;
+            return new Node<Key, Value>(key, value);
         }
 
         int comp = comparator.compare(key, node.key);
+
         if (comp == 0) node.value = value;
         else if (comp > 0) node.right = put(node.right, key, value);
-        else if(comp < 0) node.left = put(node.left, key, value);
+        else node.left = put(node.left, key, value);
 
         return node;
     }
 
     @Override
-    public void remove(Key key) {
-        if (!contains(key)) throw new NoSuchElementException();
-
-        size --;
+    public void remove(@NotNull Key key) {
         root = remove(root, key);
     }
-    private Node<Key, Value> remove (Node<Key, Value> node, Key key){
-
-        if (node == null) return null;
+    private Node<Key, Value> remove(Node<Key, Value> node, Key key){
+        if (node == null){
+            throw new NoSuchElementException();
+        }
 
         int comp = comparator.compare(key, node.key);
 
-        if (comp > 0){
-            node.right = remove(node.right, key);//1
-        }
-        else if (comp < 0) {
-            node.left = remove(node.left, key);//2
-        }
-        else{
-            if (node.left == null && node.right == null) return null; //Leaf node
-            if (node.left == null) return node.right; //Node just have right child
-            if (node.right == null) return node.left; //Node just have left child
-            else{ //Has right and left children
-                Node<Key, Value> bigger = find(node.left, max(node.left)); //Bigger node of the left son
-                bigger.right = node.right; //Now put the bigger in the position of the deleted
-                bigger.left = node.left;
-                remove(bigger.left, max(node.left)); // if we dont do this we have 2 nodes with same key
-                return bigger;//2
+        if (comp > 0) node.right = remove(node.right, key);
+        if (comp < 0) node.left = remove(node.left, key);
+        if (comp == 0) {
+            size--;
+            if (node.right == null) return node.left;
+            if (node.left == null) return node.right;
+            else {
+                Node<Key, Value> bigger = max(node.left);
+                node.value = bigger.value;
+                node.key = bigger.key;
+                remove(node.left, bigger.key);
             }
         }
-        return node; //1
+        return node;
     }
 
     @Override
@@ -109,12 +104,9 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         size = 0;
     }
 
-    //1: Process left
-    //2: Process root
-    //3: Process right
     @Override
     public Iterator<Key> inOrder() {
-        final ArrayQueue<Key> keys = new ArrayQueue<>();
+        ArrayQueue<Key> keys = new ArrayQueue<>();
         inOrder(root, keys);
         return keys.iterator();
     }
@@ -125,12 +117,9 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         inOrder(node.right, keys);
     }
 
-    //1: Process left
-    //2: Process right
-    //3: Process root
     @Override
     public Iterator<Key> postOrder() {
-        final ArrayQueue<Key> keys = new ArrayQueue<>();
+        ArrayQueue<Key> keys = new ArrayQueue<>();
         postOrder(root, keys);
         return keys.iterator();
     }
@@ -141,44 +130,30 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         keys.enqueue(node.key);
     }
 
-    //1: Process root
-    //2: Process left
-    //3: Process right
     @Override
     public Iterator<Key> preOrder() {
         ArrayQueue<Key> keys = new ArrayQueue<>();
         preOrder(root, keys);
         return keys.iterator();
     }
-    private void preOrder(Node<Key,Value> node, ArrayQueue<Key> keys){
+    private void preOrder(Node<Key, Value> node, ArrayQueue<Key> keys) {
         if (node == null) return;
         keys.enqueue(node.key);
         preOrder(node.left, keys);
         preOrder(node.right, keys);
     }
 
-    //1: Process root
-    //2: Process next level left to right
     @Override
     public Iterator<Key> levelOrder() {
-        return new LevelOrderIterator();
+        return new levelOrderIterator();
     }
-    private class LevelOrderIterator implements Iterator{
+    private class levelOrderIterator implements Iterator{
+        private Node<Key, Value> head;
         ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
 
-        Node<Key, Value> head;
-        public LevelOrderIterator(){
+        public levelOrderIterator(){
             head = root;
-            if (head != null) {
-                nodes.enqueue(head);
-            }
-            //else {throw new NoSuchElementException();
-        }
-        public LevelOrderIterator(Node<Key, Value> node) {
-            head = node;
-            if (head != null) {
-                nodes.enqueue(head);
-            }
+            if (head != null) nodes.enqueue(head);
         }
 
         @Override
@@ -187,11 +162,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
         }
 
         @Override
-        public Key next() {
-            Node<Key, Value> next = nodes.dequeue();
-            if (next.left != null) nodes.enqueue(next.left);
-            if (next.right != null) nodes.enqueue(next.right);
-            return next.key;
+        public Object next() {
+            Node<Key, Value> node = nodes.dequeue();
+            if (node.left != null) nodes.enqueue(node.left);
+            if (node.right != null) nodes.enqueue(node.right);
+            return node.key;
         }
     }
 
@@ -207,19 +182,19 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
 
     @Override
     public Key min() {
-        return min(root);
+        return min(root).key;
     }
-    private Key min (Node<Key, Value> node){
-        if (node.left == null) return node.key;
-        return min(node.left);
+    private Node<Key,Value> min(Node<Key, Value> node){
+        if (node.left != null) min(node.left);
+        return node;
     }
 
     @Override
     public Key max() {
-        return max(root);
+        return max(root).key;
     }
-    private Key max(Node<Key, Value> node){
-        if (node.right == null) return node.key;
-        return max(node.right);
+    private Node<Key, Value> max(Node<Key, Value> node){
+        if (node.right != null) max(node.right);
+        return node;
     }
 }
