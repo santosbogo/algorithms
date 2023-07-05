@@ -161,28 +161,37 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
     //2: Process next level left to right
     @Override
     public Iterator<Key> levelOrder() {
-        return new levelOrderIterator();
+        return new LevelOrderIterator();
     }
-    private class levelOrderIterator implements Iterator{
-        LinkedListQueue<Node<Key, Value>> nodes = new LinkedListQueue<>();
-        Node<Key, Value> node = root;
+    private class LevelOrderIterator implements Iterator{
+        ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
 
-        levelOrderIterator(){
-            //nodes.enqueue(node);
+        Node<Key, Value> head;
+        public LevelOrderIterator(){
+            head = root;
+            if (head != null) {
+                nodes.enqueue(head);
+            }
+            //else {throw new NoSuchElementException();
+        }
+        public LevelOrderIterator(Node<Key, Value> node) {
+            head = node;
+            if (head != null) {
+                nodes.enqueue(head);
+            }
         }
 
         @Override
         public boolean hasNext() {
-            //nodes.dequeue();
             return !nodes.isEmpty();
         }
 
         @Override
         public Key next() {
-            Node <Key, Value> temp = nodes.dequeue();
-            if(temp.left != null) nodes.enqueue(temp.left);
-            if (temp.right != null) nodes.enqueue(temp.right);
-            return temp.key;
+            Node<Key, Value> next = nodes.dequeue();
+            if (next.left != null) nodes.enqueue(next.left);
+            if (next.right != null) nodes.enqueue(next.right);
+            return next.key;
         }
     }
 
