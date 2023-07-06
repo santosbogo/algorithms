@@ -1,7 +1,6 @@
 package algorithms.tree;
 
 import algorithms.queue.ArrayQueue;
-import algorithms.queue.LinkedListQueue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -94,7 +93,6 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
             }
         }
     }
-
     private Node<Key, Value> rotateRight(Node<Key, Value> node) {
         if (node.left != null) {
             Node<Key, Value> result = node.left;
@@ -103,7 +101,6 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
             return result;
         } else return null;
     }
-
     private Node<Key, Value> rotateLeft(Node<Key, Value> node) {
         if (node.right != null) {
             Node<Key, Value> result = node.right;
