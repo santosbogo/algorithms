@@ -54,18 +54,23 @@ public class ArrayStack<E> implements Stack<E>{
     }
 
     public Iterator<E> iterator(){
-        return new ItterableArrayStack();
+        return new IterableArrayStack();
     }
 
-    private class ItterableArrayStack implements Iterator<E>{
-        private int pointer = n - 1;
+    private class IterableArrayStack implements Iterator<E>{
+        private int pointer;
+        private final E[] iterating = stack;
+        IterableArrayStack(){
+            pointer = n;
+        }
 
         public boolean hasNext(){
             return pointer>0;
         }
 
         public E next(){
-            return stack[--pointer];
+            pointer--;
+            return iterating[pointer];
         }
     }
 }
