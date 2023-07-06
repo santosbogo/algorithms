@@ -10,7 +10,7 @@ public class ArrayQueue<E> implements Queue<E> {
     private E[] queue;
     private int first = 0;
     private int last = 0;
-    public ArrayQueue(){ queue = (E[]) new Object[10]; }
+    public ArrayQueue(){ queue = (E[]) new Object[5]; }
 
     public ArrayQueue(int capacity){queue = (E[]) new Object[capacity]; }
 
