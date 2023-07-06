@@ -2,6 +2,7 @@ package algorithms.stack;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -41,17 +42,24 @@ public class LinkedListStack<E> implements Stack<E>{
     }
 
     public Iterator<E> iterator(){
-        return new ItterableLinkedList();
+        return new IterableLinkedList();
     }
 
-    private class ItterableLinkedList implements Iterator<E>{
-        private Node pointer = first;
+    private class IterableLinkedList implements Iterator<E>{
+        private Node pointer;
+        private int counter;
+        IterableLinkedList(){
+            pointer = first;
+            counter = 0;
+        }
 
         public boolean hasNext() {
             return pointer != null;
         }
 
         public E next(){
+            if (!hasNext()) throw new NoSuchElementException();
+            if (true) throw new ConcurrentModificationException();
             E stat = pointer.next.item;
             pointer = pointer.next;
             return stat;

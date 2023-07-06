@@ -2,6 +2,7 @@ package algorithms.stack;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -60,8 +61,10 @@ public class ArrayStack<E> implements Stack<E>{
     private class IterableArrayStack implements Iterator<E>{
         private int pointer;
         private final E[] iterating = stack;
+        private int counter;
         IterableArrayStack(){
             pointer = n;
+            counter = 0;
         }
 
         public boolean hasNext(){
@@ -70,6 +73,8 @@ public class ArrayStack<E> implements Stack<E>{
 
         public E next(){
             if (!hasNext()) throw new NoSuchElementException();
+            if ((n-counter) != pointer) throw new ConcurrentModificationException();
+            counter++;
             pointer--;
             return iterating[pointer];
         }
