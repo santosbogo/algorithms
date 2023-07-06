@@ -7,6 +7,7 @@ import java.util.*;
 public class ArrayStack<E> implements Stack<E>{
     private E[] stack;
     private int n = 0;
+    private int changes = 0;
 
     public ArrayStack(int size){
         stack = (E[]) new Object[size];
@@ -29,6 +30,7 @@ public class ArrayStack<E> implements Stack<E>{
             resize(size()*2);
         }
         stack[n] = item;
+        changes++;
         n++;
     }
 
@@ -41,6 +43,7 @@ public class ArrayStack<E> implements Stack<E>{
         }
         E stat = stack[--n];
         stack[n] = null;
+        changes++;
         return stat;
     }
 
@@ -59,6 +62,7 @@ public class ArrayStack<E> implements Stack<E>{
     private class IterableArrayStack implements Iterator<E>{
         private int pointer;
         private final E[] iterating = stack;
+        private final int modifications = changes;
         IterableArrayStack(){
             pointer = n;
         }
@@ -69,7 +73,7 @@ public class ArrayStack<E> implements Stack<E>{
 
         public E next(){
             if (!hasNext()) throw new NoSuchElementException();
-            if (!Arrays.equals(iterating, stack)) throw new ConcurrentModificationException();
+            if (changes != modifications) throw new ConcurrentModificationException();
             pointer--;
             return iterating[pointer];
         }
