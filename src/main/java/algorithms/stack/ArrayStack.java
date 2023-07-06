@@ -38,12 +38,11 @@ public class ArrayStack<E> implements Stack<E>{
         if (isEmpty()){
             throw new NoSuchElementException();
         }
-        n--;
         changes++;
         if ((stack.length/4) == size()){
             resize(stack.length/2);
         }
-        E stat = stack[n];
+        E stat = stack[n--];
         stack[n] = null;
         return stat;
     }

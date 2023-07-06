@@ -37,7 +37,6 @@ public class ArrayQueueTests {
         assertThat(testQueue.iterator().hasNext()).isTrue();
         testQueue.enqueue(6);
         assertThat(testQueue.iterator().next()).isEqualTo(testQueue.dequeue());
-
     }
 
     @Test
