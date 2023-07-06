@@ -19,6 +19,8 @@ public class ArrayQueue<E> implements Queue<E> {
         for (int i = first, j = 0; i < last; i++, j++)
             queue1[j] = queue[i];
         queue = queue1;
+        last = last - first;
+        first = 0;
     }
 
     @Override
