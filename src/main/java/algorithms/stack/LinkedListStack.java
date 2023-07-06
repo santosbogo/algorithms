@@ -47,10 +47,9 @@ public class LinkedListStack<E> implements Stack<E>{
 
     private class IterableLinkedList implements Iterator<E>{
         private Node pointer;
-        private int counter;
+
         IterableLinkedList(){
             pointer = first;
-            counter = 0;
         }
 
         public boolean hasNext() {
@@ -59,8 +58,8 @@ public class LinkedListStack<E> implements Stack<E>{
 
         public E next(){
             if (!hasNext()) throw new NoSuchElementException();
-            if (true) throw new ConcurrentModificationException();
-            E stat = pointer.next.item;
+            //if (true) throw new ConcurrentModificationException();
+            E stat = pointer.item;
             pointer = pointer.next;
             return stat;
         }

@@ -54,7 +54,7 @@ public class LinkedListStackTests {
         testStack.push(4);
         testStack.push(6);
         assertThat(testStack.iterator().hasNext()).isTrue();
-        assertThat(testStack.iterator().next()).isEqualTo(4);
+        assertThat(testStack.iterator().next()).isEqualTo(6);
     }
 
     @Test
