@@ -69,6 +69,7 @@ public class ArrayStack<E> implements Stack<E>{
         }
 
         public boolean hasNext(){
+            if (size() == 0) throw new NoSuchElementException();
             if (changes != modifications) throw new ConcurrentModificationException();
             return pointer>0;
         }
