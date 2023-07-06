@@ -58,7 +58,6 @@ public class LinkedListStack<E> implements Stack<E>{
 
         public E next(){
             if (!hasNext()) throw new NoSuchElementException();
-            //if (true) throw new ConcurrentModificationException();
             E stat = pointer.item;
             pointer = pointer.next;
             return stat;
