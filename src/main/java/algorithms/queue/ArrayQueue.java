@@ -14,7 +14,7 @@ public class ArrayQueue<E> implements Queue<E> {
 
     public ArrayQueue(int capacity){queue = (E[]) new Object[capacity]; }
 
-    public void resize(int size){
+    private void resize(int size){
         E[] queue1 = (E[]) new Object[size];
         for (int i = first, j = 0; i < last; i++, j++)
             queue1[j] = queue[i];
