@@ -69,6 +69,7 @@ public class ArrayStack<E> implements Stack<E>{
         }
 
         public E next(){
+            if (!hasNext()) throw new NoSuchElementException();
             pointer--;
             return iterating[pointer];
         }
