@@ -47,7 +47,8 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     @Override
     public Value get(@NotNull Key key) {
         Node<Key, Value> node = find(root, key);
-        if (node == null) return null;
+        if (node == null) return null; //testEmptyTree tira error en esta linea java.lang.AssertionError: Unexpected exception thrown: null
+                                        //Probe haciendo que en vez de null tire una excepcion NoSuchElement y tampoco
         return node.value;
     }
 
