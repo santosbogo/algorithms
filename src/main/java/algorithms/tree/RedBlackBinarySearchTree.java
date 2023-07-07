@@ -157,7 +157,6 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
     @Override
     public Iterator<Key> inOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         inOrder(root, keys);
         return keys.iterator();
@@ -171,7 +170,6 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
     @Override
     public Iterator<Key> postOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         postOrder(root, keys);
         return keys.iterator();
@@ -185,7 +183,6 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
     @Override
     public Iterator<Key> preOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         preOrder(root, keys);
         return keys.iterator();
@@ -199,7 +196,6 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
     @Override
     public Iterator<Key> levelOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         return new levelOrderIterator();
     }
     private class levelOrderIterator implements Iterator{
@@ -209,6 +205,7 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
         public levelOrderIterator(){
             head = root;
             if (head != null) nodes.enqueue(head);
+            else throw new NoSuchElementException();
         }
 
         @Override
