@@ -152,10 +152,10 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
         ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
 
         public levelOrderIterator(){
+            head = root;
             if (!isEmpty()) {
                 if (head != null) nodes.enqueue(head);
             }
-            head = root;
         }
 
         @Override
