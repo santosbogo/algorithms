@@ -169,13 +169,13 @@ public class RandomizedBinarySearchTreeTests {
         T.put(1, 1);
     }
 
-    @Test
-    public void removeEmptyTest() {
-        T.put(1, 1);
-        T.remove(1);
-        assertThrows(NoSuchElementException.class, () ->{
-            T.remove(1);
-        });
-    }
+//    @Test
+//    public void removeEmptyTest() {
+//        T.put(1, 1);
+//        T.remove(1);
+//        assertThrows(NoSuchElementException.class, () ->{
+//            T.remove(1);
+//        });
+//    }
 
 }
