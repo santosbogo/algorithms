@@ -21,7 +21,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public int size() {
-        if (isEmpty()) throw new NoSuchElementException();
         return size;
     }
 
