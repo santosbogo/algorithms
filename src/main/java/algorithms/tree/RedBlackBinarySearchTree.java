@@ -93,7 +93,6 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
         root = put(root, key, value);
     }
     private Node<Key, Value> put(Node<Key, Value> node, Key key, Value value) {
-
         if (node == null) {
             size++;
             return new Node<>(key, value, RED);
@@ -131,7 +130,7 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
             result.color = node.color;
             node.color = RED;
             return result;
-        } else return node; // QUE PASA SI NO ES POSIBLE ROTAR?????
+        } else return null; // QUE PASA SI NO ES POSIBLE ROTAR?????
     }
     private Node<Key, Value> rotateLeft(Node<Key, Value> node) {
         if (node.right != null) {
@@ -141,7 +140,7 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
             result.color = node.color;
             node.color = RED;
             return result;
-        } else return node; // QUE PASA SI NO ES POSIBLE ROTAR?????
+        } else return null; // QUE PASA SI NO ES POSIBLE ROTAR?????
     }
 
     @Override
