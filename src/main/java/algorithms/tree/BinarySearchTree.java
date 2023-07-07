@@ -46,6 +46,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Value get(@NotNull Key key) {
+        if (isEmpty()) throw new NoSuchElementException();
         Node<Key, Value> node = find(root, key);
         if (node == null) return null;
         return node.value;
@@ -72,7 +73,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void remove(@NotNull Key key) {
-        if (isEmpty()) throw new NoSuchElementException();
         root = remove(root, key);
         size --;
     }
