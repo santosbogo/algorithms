@@ -1,9 +1,11 @@
 package algorithms.tree;
 
+import algorithms.queue.ArrayQueue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>{
 
@@ -155,42 +157,102 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
     @Override
     public Iterator<Key> inOrder() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        ArrayQueue<Key> keys = new ArrayQueue<>();
+        inOrder(root, keys);
+        return keys.iterator();
+    }
+    private void inOrder(Node<Key, Value> node, ArrayQueue<Key> keys){
+        if (node == null) return;
+        inOrder(node.left, keys);
+        keys.enqueue(node.key);
+        inOrder(node.right, keys);
     }
 
     @Override
     public Iterator<Key> postOrder() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        ArrayQueue<Key> keys = new ArrayQueue<>();
+        postOrder(root, keys);
+        return keys.iterator();
+    }
+    private void postOrder(Node<Key, Value> node, ArrayQueue<Key> keys){
+        if (node == null) return;
+        postOrder(node.left, keys);
+        postOrder(node.right, keys);
+        keys.enqueue(node.key);
     }
 
     @Override
     public Iterator<Key> preOrder() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        ArrayQueue<Key> keys = new ArrayQueue<>();
+        preOrder(root, keys);
+        return keys.iterator();
+    }
+    private void preOrder(Node<Key, Value> node, ArrayQueue<Key> keys) {
+        if (node == null) return;
+        keys.enqueue(node.key);
+        preOrder(node.left, keys);
+        preOrder(node.right, keys);
     }
 
     @Override
     public Iterator<Key> levelOrder() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        return new levelOrderIterator();
+    }
+    private class levelOrderIterator implements Iterator{
+        private Node<Key, Value> head;
+        ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
+
+        public levelOrderIterator(){
+            head = root;
+            if (head != null) nodes.enqueue(head);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !nodes.isEmpty();
+        }
+
+        @Override
+        public Object next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Node<Key, Value> node = nodes.dequeue();
+            if (node.left != null) nodes.enqueue(node.left);
+            if (node.right != null) nodes.enqueue(node.right);
+            return node.key;
+        }
     }
 
     @Override
     public void removeMin() {
-        throw new RuntimeException();
-
+        remove(min());
     }
 
     @Override
     public void removeMax() {
-        throw new RuntimeException();
+        remove(max());
     }
 
     @Override
     public Key min() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        return min(root).key;
+    }
+    private Node<Key,Value> min(Node<Key, Value> node){
+        if (node.left != null) return min(node.left);
+        return node;
     }
 
     @Override
     public Key max() {
-        return null;
+        if (isEmpty()) throw new NoSuchElementException();
+        return max(root).key;
+    }
+    private Node<Key, Value> max(Node<Key, Value> node){
+        if (node.right != null) return max(node.right);
+        return node;
     }
 }
