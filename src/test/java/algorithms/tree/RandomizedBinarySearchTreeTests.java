@@ -51,7 +51,7 @@ public class RandomizedBinarySearchTreeTests {
     public void removeRootTest() {
         T.put(1, 1);
         T.remove(1);
-        //assertThat(T.size()).isEqualTo(0);
+        assertThat(T.size()).isEqualTo(0);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class RandomizedBinarySearchTreeTests {
         T.put(2, 2);
         T.clear();
         assertThat(T.levelOrder().hasNext()).isFalse();
-        //assertThat(T.size()).isEqualTo(0);
+        assertThat(T.size()).isEqualTo(0);
     }
 
     @Test
