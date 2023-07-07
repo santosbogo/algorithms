@@ -67,9 +67,7 @@ public class RandomizedBinarySearchTreeTests {
         T.put(1, 1);
         T.put(2, 2);
         T.clear();
-        assertThrows(NoSuchElementException.class, () ->{
-            T.levelOrder().hasNext();
-        });
+        assertThat(T.levelOrder().hasNext()).isFalse();
         assertThat(T.size()).isEqualTo(0);
     }
 
@@ -123,12 +121,19 @@ public class RandomizedBinarySearchTreeTests {
 
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test
     public void levelOrderEmptyTest() {
-        for (Iterator<Integer> a = T.levelOrder(); a.hasNext(); ) {
+        for (Iterator<Integer> a = T.levelOrder(); a.hasNext();) {
             int i = a.next();
+            assertThat(i).isEqualTo(null);
         }
     }
+//    @Test(expected = NoSuchElementException.class)
+//    public void levelOrderEmptyTest() {
+//        for (Iterator<Integer> a = T.levelOrder(); a.hasNext(); ) {
+//            int i = a.next();
+//        }
+//    }
 
     @Test
     public void variationsTest() {
