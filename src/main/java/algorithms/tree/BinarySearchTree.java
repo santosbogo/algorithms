@@ -76,6 +76,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     @Override
     public void remove(@NotNull Key key) {
         get(key); //We call get becouse we use its no such ellement exeption if the key is not in the tree
+        if (isEmpty()) throw new NoSuchElementException();
         root = remove(root, key);
         size --;
     }
@@ -104,6 +105,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void clear() {
+        if (isEmpty()) throw new NoSuchElementException();
         root = null;
         size = 0;
     }
@@ -191,6 +193,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Key min() {
+        if (isEmpty()) throw new NoSuchElementException();
         return min(root).key;
     }
     private Node<Key,Value> min(Node<Key, Value> node){
@@ -200,6 +203,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Key max() {
+        if (isEmpty()) throw new NoSuchElementException();
         return max(root).key;
     }
     private Node<Key, Value> max(Node<Key, Value> node){
