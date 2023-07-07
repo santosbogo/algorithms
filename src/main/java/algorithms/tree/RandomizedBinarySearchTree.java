@@ -31,13 +31,14 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
         return (size == 0);
     }
 
-    private Node<Key, Value> find(Node<Key, Value> node, Key key) {
+    private Node<Key, Value> find(Node<Key, Value> node, Key key){
         if (node == null) return null;
 
         int comp = comparator.compare(key, node.key);
+
         if (comp > 0) return find(node.right, key);
         else if (comp < 0) return find(node.left, key);
-        else return node;
+        return node; //found the node
     }
 
     @Override
@@ -61,11 +62,11 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
             size++;
             return new Node<>(key, value);
         }
+
         boolean randomRoot = random.nextInt(size) == 0;
-        if (randomRoot) {
-            return rootPut(node, key, value);
-            //node = rootPut(node, key, value);
-        } else {
+        if (randomRoot) return rootPut(node, key, value);
+
+        else {
             int comp = comparator.compare(key, node.key);
             if (comp > 0) node.right = randomizedPut(node.right, key, value);
             else if (comp < 0) node.left = randomizedPut(node.left, key, value);
@@ -87,9 +88,8 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
             else if (comp < 0) {
                 node.left = randomizedPut(node.left, key, value);
                 return rotateRight(node);
-            } else {
-                node.value = value;
             }
+            else node.value = value;
         }
         return node;
     }
@@ -99,7 +99,8 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
             node.left = result.right;
             result.right = node;
             return result;
-        } else return null;
+        }
+        return null;
     }
     private Node<Key, Value> rotateLeft(Node<Key, Value> node) {
         if (node.right != null) {
@@ -107,12 +108,12 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
             node.right = result.left;
             result.left = node;
             return result;
-        } else return null;
+        }
+        return null;
     }
 
     @Override
     public void remove(@NotNull Key key) {
-        if (isEmpty()) throw new NoSuchElementException();
         root = remove(root, key);
         size --;
     }
@@ -189,12 +190,12 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
         return new levelOrderIterator();
     }
     private class levelOrderIterator implements Iterator{
-        private Node<Key, Value> head;
+        Node<Key, Value> head;
         ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
 
         public levelOrderIterator(){
             head = root;
-            if (head != null) nodes.enqueue(head);
+            if (!isEmpty() && head != null) nodes.enqueue(head);
         }
 
         @Override

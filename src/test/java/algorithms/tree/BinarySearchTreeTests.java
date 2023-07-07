@@ -239,12 +239,10 @@ public class BinarySearchTreeTests {
         assertThat(mapita.size()).isEqualTo(1);
     }
 
-//    @Test
-//    public void removeTest3() {
-//        assertThrows(NoSuchElementException.class, () ->{
-//            mapita.remove(8);
-//        });
-//    }
+    @Test
+    public void removeTest3() {
+        mapita.remove(8);
+    }
 
     @Test
     public void removeTest4() {
