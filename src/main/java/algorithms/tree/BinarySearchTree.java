@@ -72,7 +72,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void remove(@NotNull Key key) {
-        get(key); //We call get becouse we use its no such ellement exeption if the key is not in the tree
         root = remove(root, key);
         size --;
     }
