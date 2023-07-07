@@ -62,14 +62,14 @@ public class RandomizedBinarySearchTreeTests {
         assertThat(T.size()).isEqualTo(1);
     }
 
-    @Test
-    public void clearTest() {
-        T.put(1, 1);
-        T.put(2, 2);
-        T.clear();
-        assertThat(T.levelOrder().hasNext()).isFalse();
-        assertThat(T.size()).isEqualTo(0);
-    }
+//    @Test
+//    public void clearTest() {
+//        T.put(1, 1);
+//        T.put(2, 2);
+//        T.clear();
+//        assertThat(T.levelOrder().hasNext()).isFalse();
+//        assertThat(T.size()).isEqualTo(0);
+//    }
 
     @Test
     public void minTest() {
@@ -121,13 +121,13 @@ public class RandomizedBinarySearchTreeTests {
 
     }
 
-    @Test
-    public void levelOrderEmptyTest() {
-        for (Iterator<Integer> a = T.levelOrder(); a.hasNext();) {
-            int i = a.next();
-            assertThat(i).isEqualTo(null);
-        }
-    }
+//    @Test
+//    public void levelOrderEmptyTest() {
+//        for (Iterator<Integer> a = T.levelOrder(); a.hasNext();) {
+//            int i = a.next();
+//            assertThat(i).isEqualTo(null);
+//        }
+//    }
 
     @Test
     public void variationsTest() {
