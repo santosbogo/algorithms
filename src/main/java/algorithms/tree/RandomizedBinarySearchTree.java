@@ -148,7 +148,6 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
 
     @Override
     public Iterator<Key> inOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         inOrder(root, keys);
         return keys.iterator();
@@ -162,7 +161,6 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
 
     @Override
     public Iterator<Key> postOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         postOrder(root, keys);
         return keys.iterator();
