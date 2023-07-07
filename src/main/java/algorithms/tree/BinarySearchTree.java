@@ -46,8 +46,8 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Value get(@NotNull Key key) {
-        Node<Key, Value> node = find(root, key);    //testEmptyTree tira error en esta linea java.lang.AssertionError: Unexpected exception thrown: null
-        return node == null ? null : node.value;    //Probe haciendo que en vez de null tire una excepcion NoSuchElement y tampoco
+        Node<Key, Value> node = find(root, key);
+        return node == null ? null : node.value;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     private Node<Key, Value> put(Node<Key, Value> node, Key key, Value value){
         if (node == null){
             size ++;
-            return new Node<Key, Value>(key, value);
+            return new Node<>(key, value);
         }
 
         int comp = comparator.compare(key, node.key);
@@ -71,7 +71,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void remove(@NotNull Key key) {
-        if (isEmpty()) throw new NoSuchElementException();
+        //if (isEmpty()) throw new NoSuchElementException();
         root = remove(root, key);
         size --;
     }
@@ -106,7 +106,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Iterator<Key> inOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         inOrder(root, keys);
         return keys.iterator();
@@ -120,7 +119,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Iterator<Key> postOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         postOrder(root, keys);
         return keys.iterator();
@@ -134,7 +132,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Iterator<Key> preOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         ArrayQueue<Key> keys = new ArrayQueue<>();
         preOrder(root, keys);
         return keys.iterator();
@@ -148,7 +145,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public Iterator<Key> levelOrder() {
-        if (isEmpty()) throw new NoSuchElementException();
         return new levelOrderIterator();
     }
     private class levelOrderIterator implements Iterator{
@@ -156,6 +152,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
         ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
 
         public levelOrderIterator(){
+            if (isEmpty()) return;
             head = root;
             if (head != null) nodes.enqueue(head);
         }
