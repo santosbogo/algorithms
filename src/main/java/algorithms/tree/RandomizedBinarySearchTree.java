@@ -23,7 +23,6 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
 
     @Override
     public int size() {
-        if (isEmpty()) throw new NoSuchElementException();
         return size;
     }
 
