@@ -155,11 +155,11 @@ public class BinarySearchTreeTests {
             var++;
         }
     }
-    @Test
+
+    @Test(expected = NoSuchElementException.class)
     public void levelOrderEmptyTest() {
         for (Iterator<Integer> a = T.levelOrder(); a.hasNext();) {
-            int i = a.next();
-            assertThat(i).isEqualTo(null);
+                int i = a.next();
         }
     }
 
