@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     private Node<Key, Value> root = null;
-    private Comparator<Key> comparator;
+    private final Comparator<Key> comparator;
     private int size;
 
     public BinarySearchTree(Comparator <Key> comparator){
@@ -30,8 +30,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     }
 
     private Node<Key, Value> find(Node<Key, Value> node, Key key){
-        if (node == null)
-            return null;
+        if (node == null) return null;
 
         int comp = comparator.compare(key, node.key);
 
@@ -42,13 +41,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public boolean contains(@NotNull Key key) {
-        if (isEmpty()) throw new NoSuchElementException();
         return find(root, key) != null;
     }
 
     @Override
     public Value get(@NotNull Key key) {
-        if (isEmpty()) throw new NoSuchElementException();
         Node<Key, Value> node = find(root, key);
         if (node == null) throw new NoSuchElementException();
         return node.value;
@@ -76,7 +73,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
     @Override
     public void remove(@NotNull Key key) {
         get(key); //We call get becouse we use its no such ellement exeption if the key is not in the tree
-        if (isEmpty()) throw new NoSuchElementException();
         root = remove(root, key);
         size --;
     }
@@ -105,7 +101,6 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void clear() {
-        if (isEmpty()) throw new NoSuchElementException();
         root = null;
         size = 0;
     }
