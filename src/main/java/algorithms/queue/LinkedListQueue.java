@@ -53,16 +53,15 @@ public class LinkedListQueue<E> implements Queue<E>{
 
     private class IterableLinkedListQueue implements Iterator<E>{
         private Node pointer = first;
-        private final int initialsize = size();
 
         public boolean hasNext(){
-            if (initialsize != size()) throw new ConcurrentModificationException("Cant modify queue.");
             if (isEmpty()) return false;
             return pointer != null;
         }
 
         public E next(){
-            E stat = pointer.next.item;
+            if (!hasNext()) throw new NoSuchElementException();
+            E stat = pointer.item;
             pointer = pointer.next;
             return  stat;
         }

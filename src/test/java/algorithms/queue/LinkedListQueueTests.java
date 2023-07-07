@@ -36,7 +36,8 @@ public class LinkedListQueueTests {
         testQueue.enqueue(3);
         assertThat(testQueue.iterator().hasNext()).isTrue();
         testQueue.enqueue(6);
-        assertThat(testQueue.iterator().next()).isEqualTo(6);
+        testQueue.enqueue(8);
+        assertThat(testQueue.iterator().next()).isEqualTo(3);
     }
 
     @Test
@@ -51,7 +52,6 @@ public class LinkedListQueueTests {
         testQueue.enqueue(4);
         testQueue.dequeue();
         testQueue.enqueue(5);
-        //System.out.println(testQueue.size());
         assertThat(testQueue.size()).isEqualTo(2);
     }
 
