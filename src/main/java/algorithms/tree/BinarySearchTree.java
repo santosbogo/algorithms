@@ -42,11 +42,13 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public boolean contains(@NotNull Key key) {
+        if (isEmpty()) throw new NoSuchElementException();
         return find(root, key) != null;
     }
 
     @Override
     public Value get(@NotNull Key key) {
+        if (isEmpty()) throw new NoSuchElementException();
         Node<Key, Value> node = find(root, key);
         if (node == null) throw new NoSuchElementException();
         return node.value;
