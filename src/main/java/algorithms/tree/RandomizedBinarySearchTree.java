@@ -109,61 +109,30 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
     }
 
 
-//    @Override
-//    public void remove(@NotNull Key key) {
-//        if (!contains(key)) return;
-//        root = remove(root, key);
-//        size --;
-//    }
-//    private Node<Key, Value> remove(Node<Key, Value> node, Key key){
-//        if (node == null) return null;
-//
-//        int comp = comparator.compare(key, node.key);
-//
-//        if (comp > 0) node.right = remove(node.right, key);
-//        else if (comp < 0) node.left = remove(node.left, key);
-//        else{
-//            if (node.right == null) return node.left;
-//            else if (node.left == null) return node.right;
-//            else {
-//                Node<Key, Value> bigger = max(node.left);
-//                node.value = bigger.value;
-//                node.key = bigger.key;
-//                remove(node.left, bigger.key);
-//            }
-//        }
-//        return node;
-//    }
-
     @Override
     public void remove(@NotNull Key key) {
-        if (contains(key)) size--;
+        if (!contains(key)) return;
         root = remove(root, key);
+        size --;
     }
     private Node<Key, Value> remove(Node<Key, Value> node, Key key){
         if (node == null) return null;
 
         int comp = comparator.compare(key, node.key);
-        if (comp < 0) {
-            node.left = remove(node.left, key);
-            return node;
-        }
-        else if (comp > 0){
-            node.right = remove(node.right, key);
-            return node;
-        }
-        else {
-            if (node.left == null) return node.right;
-            else if (node.right == null) return node.left;
-            else{
-                Node<Key, Value> replacement = min(node.right);
-                node.key = replacement.key;
-                node.value = replacement.value;
-                replacement.key = key;
-                node.right = remove(node.right, key);
-                return node;
+
+        if (comp > 0) node.right = remove(node.right, key);
+        else if (comp < 0) node.left = remove(node.left, key);
+        else{
+            if (node.right == null) return node.left;
+            else if (node.left == null) return node.right;
+            else {
+                Node<Key, Value> bigger = max(node.left);
+                node.value = bigger.value;
+                node.key = bigger.key;
+                node.left = remove(node.left, bigger.key);
             }
         }
+        return node;
     }
 
     @Override
