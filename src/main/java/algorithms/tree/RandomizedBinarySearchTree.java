@@ -52,105 +52,45 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
         return node == null ? null : node.value;
     }
 
-//    @Override
-//    public void put(@NotNull Key key, Value value) {
-//        if (!contains(key)) size ++;
-//        root = randomizedPut(root, key, value);
-//    }
-//
-//    private Node<Key, Value> randomizedPut(Node<Key, Value> node, Key key, Value value) {
-//        if (node == null) return new Node<>(key, value);
-//
-//        boolean randomRoot = random.nextInt(size) == 0;
-//        if (randomRoot) return rootPut(node, key, value);
-//
-//        else {
-//            int comp = comparator.compare(key, node.key);
-//            if (comp > 0) node.right = randomizedPut(node.right, key, value);
-//            else if (comp < 0) node.left = randomizedPut(node.left, key, value);
-//            else node.value = value;
-//        }
-//        return node;
-//    }
-//
-//    private Node<Key, Value> rootPut(Node<Key, Value> node, Key key, Value value) {
-//        if (node == null) return new Node<>(key, value);
-//        else {
-//            int comp = comparator.compare(key, node.key);
-//            if (comp > 0) {
-//                node.right = randomizedPut(node.right, key, value);
-//                return rotateLeft(node);
-//            }
-//            else if (comp < 0) {
-//                node.left = randomizedPut(node.left, key, value);
-//                return rotateRight(node);
-//            }
-//            else node.value = value;
-//        }
-//        return node;
-//    }
-//    private Node<Key, Value> rotateRight(Node<Key, Value> node) {
-//        if (node.left != null) {
-//            Node<Key, Value> result = node.left;
-//            node.left = result.right;
-//            result.right = node;
-//            return result;
-//        }
-//        return null;
-//    }
-//    private Node<Key, Value> rotateLeft(Node<Key, Value> node) {
-//        if (node.right != null) {
-//            Node<Key, Value> result = node.right;
-//            node.right = result.left;
-//            result.left = node;
-//            return result;
-//        }
-//        return null;
-//    }
-
     @Override
     public void put(@NotNull Key key, Value value) {
+        if (!contains(key)) size ++;
         root = randomizedPut(root, key, value);
     }
-    private Node<Key, Value> randomizedPut (Node<Key, Value> node, Key key, Value value){
-        if (node == null){
-            size++;
-            return new Node<>(key, value);
-        }
-        boolean accept = random.nextInt(size) == 0;
-        if (accept) return rootPut(node, key, value);
+
+    private Node<Key, Value> randomizedPut(Node<Key, Value> node, Key key, Value value) {
+        if (node == null) return new Node<>(key, value);
+
+        boolean randomRoot = random.nextInt(size) == 0;
+        if (randomRoot) return rootPut(node, key, value);
+
         else {
             int comp = comparator.compare(key, node.key);
-
-            if (comp < 0) {node.left = randomizedPut(node.left, key, value);}
-            else if (comp > 0) {node.right = randomizedPut(node.right, key, value);}
-            else {node.value = value;}
+            if (comp > 0) node.right = randomizedPut(node.right, key, value);
+            else if (comp < 0) node.left = randomizedPut(node.left, key, value);
+            else node.value = value;
         }
         return node;
     }
-    private Node<Key, Value> rootPut (Node<Key, Value> node, Key key, Value value){
-        if (node == null){
-            size++;
-            return new Node<>(key, value);
-        } else {
-            int comp = comparator.compare(key, node.key);
 
-            if (comp < 0) {
-                node.left = randomizedPut(node.left, key, value);
-                return rotateRight(node);
-            }
-            else if (comp > 0) {
+    private Node<Key, Value> rootPut(Node<Key, Value> node, Key key, Value value) {
+        if (node == null) return new Node<>(key, value);
+        else {
+            int comp = comparator.compare(key, node.key);
+            if (comp > 0) {
                 node.right = randomizedPut(node.right, key, value);
                 return rotateLeft(node);
             }
-            else {
-                node.value = value;
+            else if (comp < 0) {
+                node.left = randomizedPut(node.left, key, value);
+                return rotateRight(node);
             }
+            else node.value = value;
         }
         return node;
     }
-    private Node<Key, Value> rotateRight(Node<Key, Value> node){
-        if (node.left != null){
+    private Node<Key, Value> rotateRight(Node<Key, Value> node) {
+        if (node.left != null) {
             Node<Key, Value> result = node.left;
             node.left = result.right;
             result.right = node;
@@ -158,8 +98,8 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
         }
         return null;
     }
-    private Node<Key, Value> rotateLeft(Node<Key, Value> node){
-        if (node.right != null){
+    private Node<Key, Value> rotateLeft(Node<Key, Value> node) {
+        if (node.right != null) {
             Node<Key, Value> result = node.right;
             node.right = result.left;
             result.left = node;
@@ -168,30 +108,62 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
         return null;
     }
 
+
+//    @Override
+//    public void remove(@NotNull Key key) {
+//        if (!contains(key)) return;
+//        root = remove(root, key);
+//        size --;
+//    }
+//    private Node<Key, Value> remove(Node<Key, Value> node, Key key){
+//        if (node == null) return null;
+//
+//        int comp = comparator.compare(key, node.key);
+//
+//        if (comp > 0) node.right = remove(node.right, key);
+//        else if (comp < 0) node.left = remove(node.left, key);
+//        else{
+//            if (node.right == null) return node.left;
+//            else if (node.left == null) return node.right;
+//            else {
+//                Node<Key, Value> bigger = max(node.left);
+//                node.value = bigger.value;
+//                node.key = bigger.key;
+//                remove(node.left, bigger.key);
+//            }
+//        }
+//        return node;
+//    }
+
     @Override
     public void remove(@NotNull Key key) {
-        if (!contains(key)) return;
+        if (contains(key)) size--;
         root = remove(root, key);
-        size --;
     }
     private Node<Key, Value> remove(Node<Key, Value> node, Key key){
         if (node == null) return null;
 
         int comp = comparator.compare(key, node.key);
-
-        if (comp > 0) node.right = remove(node.right, key);
-        else if (comp < 0) node.left = remove(node.left, key);
-        else{
-            if (node.right == null) return node.left;
-            else if (node.left == null) return node.right;
-            else {
-                Node<Key, Value> bigger = max(node.left);
-                node.value = bigger.value;
-                node.key = bigger.key;
-                remove(node.left, bigger.key);
+        if (comp < 0) {
+            node.left = remove(node.left, key);
+            return node;
+        }
+        else if (comp > 0){
+            node.right = remove(node.right, key);
+            return node;
+        }
+        else {
+            if (node.left == null) return node.right;
+            else if (node.right == null) return node.left;
+            else{
+                Node<Key, Value> replacement = min(node.right);
+                node.key = replacement.key;
+                node.value = replacement.value;
+                replacement.key = key;
+                node.right = remove(node.right, key);
+                return node;
             }
         }
-        return node;
     }
 
     @Override
