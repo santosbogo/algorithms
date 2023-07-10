@@ -114,14 +114,12 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
 
     @Override
     public void remove(@NotNull Key key) {
+        if (!contains(key)) return;
         root = remove(root, key);
         size --;
     }
     private Node<Key, Value> remove(Node<Key, Value> node, Key key){
-        if (node == null){
-            size++;
-            return null;
-        }
+        if (node == null) return null;
 
         int comp = comparator.compare(key, node.key);
 
