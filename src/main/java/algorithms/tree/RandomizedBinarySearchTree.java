@@ -1,7 +1,6 @@
 package algorithms.tree;
 
 import algorithms.queue.ArrayQueue;
-import algorithms.queue.LinkedListQueue;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Comparator;
@@ -187,20 +186,30 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
     }
 
     @Override
-    public Iterator<Key> levelOrder() {return new LevelOrderIterator();}
-    private class LevelOrderIterator implements Iterator<Key> {
-        LinkedListQueue<Node<Key, Value>> queue = new LinkedListQueue<>();
-        Node<Key, Value> head = root;
-        LevelOrderIterator(){queue.enqueue(head);}
-        @Override
-        public boolean hasNext() {return !queue.isEmpty();}
+    public Iterator<Key> levelOrder() {
+        return new levelOrderIterator();
+    }
+    private class levelOrderIterator implements Iterator{
+        Node<Key, Value> head;
+        ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
+
+        public levelOrderIterator(){
+            head = root;
+            if (!isEmpty() && head != null) nodes.enqueue(head);
+        }
 
         @Override
-        public Key next() {
-            Node<Key, Value> temp = queue.dequeue();
-            if (temp.left != null) queue.enqueue(temp.left);
-            if (temp.right != null) queue.enqueue(temp.right);
-            return temp.key;
+        public boolean hasNext() {
+            return !nodes.isEmpty();
+        }
+
+        @Override
+        public Object next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            Node<Key, Value> node = nodes.dequeue();
+            if (node.left != null) nodes.enqueue(node.left);
+            if (node.right != null) nodes.enqueue(node.right);
+            return node.key;
         }
     }
 
