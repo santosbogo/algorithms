@@ -38,7 +38,7 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
 
         if (comp > 0) return find(node.right, key);
         else if (comp < 0) return find(node.left, key);
-        return node; //found the node
+        else return node; //found the node
     }
 
     @Override
@@ -126,10 +126,10 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
         int comp = comparator.compare(key, node.key);
 
         if (comp > 0) node.right = remove(node.right, key);
-        if (comp < 0) node.left = remove(node.left, key);
-        if (comp == 0) {
+        else if (comp < 0) node.left = remove(node.left, key);
+        else{
             if (node.right == null) return node.left;
-            if (node.left == null) return node.right;
+            else if (node.left == null) return node.right;
             else {
                 Node<Key, Value> bigger = max(node.left);
                 node.value = bigger.value;
