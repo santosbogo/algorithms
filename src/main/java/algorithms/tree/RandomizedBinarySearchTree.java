@@ -48,8 +48,9 @@ public class RandomizedBinarySearchTree<Key, Value> implements TreeMap<Key, Valu
 
     @Override
     public Value get(@NotNull Key key) {
-        Node<Key, Value> node = find(root, key);
-        return node == null ? null : node.value;
+//        Node<Key, Value> node = find(root, key);
+//        return node == null ? null : node.value;
+        return find(root, key) != null ? find(root, key).value : null;
     }
 
     @Override
