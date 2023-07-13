@@ -214,8 +214,9 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
         public levelOrderIterator(){
             head = root;
-            if (head != null) nodes.enqueue(head);
-            else throw new NoSuchElementException();
+            if (!isEmpty()) {
+                if (head != null) nodes.enqueue(head);
+            }
         }
 
         @Override
