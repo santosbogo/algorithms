@@ -206,15 +206,16 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
     @Override
     public Iterator<Key> levelOrder() {
-        return new LevelOrderIterator();
+        return new levelOrderIterator();
     }
-    private class LevelOrderIterator implements Iterator{
-        Node<Key, Value> head;
+    private class levelOrderIterator implements Iterator{
+        private Node<Key, Value> head;
         ArrayQueue<Node<Key, Value>> nodes = new ArrayQueue<>();
 
-        public LevelOrderIterator(){
+        public levelOrderIterator(){
             head = root;
-            if (!isEmpty() && head != null) nodes.enqueue(head);
+            if (head != null) nodes.enqueue(head);
+            else throw new NoSuchElementException();
         }
 
         @Override
