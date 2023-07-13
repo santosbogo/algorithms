@@ -214,9 +214,7 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
         public levelOrderIterator(){
             head = root;
-            if (!isEmpty()) {
-                if (head != null) nodes.enqueue(head);
-            }
+            if (!isEmpty() && head != null) nodes.enqueue(head);
         }
 
         @Override
@@ -233,6 +231,7 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
             return node.key;
         }
     }
+
 
     @Override
     public void removeMin() {
