@@ -80,48 +80,52 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
 
 
     @Override
-    public void put(@NotNull Key key, Value value) {
-        if (root == null) { //Case 1 node to insert is the root
-            root = new Node<>(key, value, BLACK);
-            size ++;
-            return;
-        }
-        else if(comparator.compare(key, root.key) == 0){ //Case 1 node to insert is the root
-            root.value = value;
-            return;
-        }
+    public void put(Key key, Value value) {
         root = put(root, key, value);
+        root.color = false;  // Ensure the root is always black
     }
+
+    // Helper method for insertion
     private Node<Key, Value> put(Node<Key, Value> node, Key key, Value value) {
         if (node == null) {
-            size++;
-            return new Node<>(key, value, RED);
+            // If the node is null, create a new red node
+            return new Node<>(key, value, true);
         }
 
         int comp = comparator.compare(key, node.key);
+        if (comp < 0) {
+            // Recursively insert into the left subtree
+            node.left = put(node.left, key, value);
+        } else if (comp > 0) {
+            // Recursively insert into the right subtree
+            node.right = put(node.right, key, value);
+        } else {
+            // If the key already exists, update the value
+            node.value = value;
+        }
 
-        if (comp > 0) node.right = put(node.right, key, value);
-        else if (comp < 0) node.left = put(node.left, key, value);
-        else return node;
-
-        //Check properties of RedBlack trees
-        if (node.right.color == RED && node.left.color == BLACK) {
+        // Perform necessary rotations and color adjustments
+        if (isRed(node.right) && !isRed(node.left)) {
             node = rotateLeft(node);
         }
-        if(node.left.color == RED && node.left.left.color == RED){
+        if (isRed(node.left) && isRed(node.left.left)) {
             node = rotateRight(node);
         }
-        if(node.left.color == RED && node.right.color == RED){
-            recolor(node);
+        if (isRed(node.left) && isRed(node.right)) {
+            flipColors(node);
         }
+
         return node;
     }
 
-    private void recolor(Node<Key, Value> node){
-        node.color = RED;
-        node.left.color = BLACK;
-        node.right.color = BLACK;
+    // Helper method to check if a node is red
+    private boolean isRed(Node<Key, Value> node) {
+        if (node == null) {
+            return false;
+        }
+        return node.color;
     }
+
     private Node<Key, Value> rotateRight(Node<Key, Value> node){
         if (node.left != null) {
             Node<Key, Value> result = node.left;
@@ -142,6 +146,13 @@ public class RedBlackBinarySearchTree<Key, Value> implements TreeMap<Key, Value>
             return result;
         } else return null; // QUE PASA SI NO ES POSIBLE ROTAR?????
     }
+
+    private void flipColors(Node<Key, Value> node) {
+        node.color = !node.color;
+        node.left.color = !node.left.color;
+        node.right.color = !node.right.color;
+    }
+
 
     @Override
     public void remove(@NotNull Key key) {

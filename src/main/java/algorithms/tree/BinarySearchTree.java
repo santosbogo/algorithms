@@ -52,13 +52,11 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void put(@NotNull Key key, Value value) {
+        if (!contains(key)) size++;
         root = put (root, key, value);
     }
     private Node<Key, Value> put(Node<Key, Value> node, Key key, Value value){
-        if (node == null){
-            size ++;
-            return new Node<>(key, value);
-        }
+        if (node == null) return new Node<>(key, value);
 
         int comp = comparator.compare(key, node.key);
 
@@ -71,14 +69,12 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
 
     @Override
     public void remove(@NotNull Key key) {
+        if (!contains(key)) return;
         root = remove(root, key);
         size --;
     }
     private Node<Key, Value> remove(Node<Key, Value> node, Key key){
-        if (node == null){
-            size++;
-            return null;
-        }
+        if (node == null) return null;
 
         int comp = comparator.compare(key, node.key);
 
@@ -91,7 +87,7 @@ public class BinarySearchTree<Key, Value> implements TreeMap<Key, Value> {
                 Node<Key, Value> bigger = max(node.left);
                 node.value = bigger.value;
                 node.key = bigger.key;
-                remove(node.left, bigger.key);
+                node.left = remove(node.left, bigger.key);
             }
         }
         return node;
